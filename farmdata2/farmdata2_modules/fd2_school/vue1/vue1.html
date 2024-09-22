@@ -1,3 +1,18 @@
+<style>
+  table {
+    width: 20%;
+  }
+  
+  th, td {
+    text-align: center;
+    padding: 5px;
+  }
+  
+  tr:nth-child(odd) {
+    background-color: #e8f3c1;
+  }
+</style>
+
 <h1>Harvest Report</h1>
 <p>This page is a <i>mockup</i> of a simplified harvest report</p>
 <div id="rpt-title" v-cloak>
@@ -55,21 +70,6 @@
     <li><b>Crop:</b>Kale</li>
 </ul>
 
-<style>
-    table {
-      width: 20%;
-    }
-    
-    th, td {
-      text-align: center;
-      padding: 5px;
-    }
-    
-    tr:nth-child(odd) {
-      background-color: #e8f3c1;
-    }
-</style>
-
 <table border=1>
   <tr>
     <th>Date</th>
@@ -78,26 +78,12 @@
     <th>Yield</th>
     <th>Units</th>
   </tr>
-  <tr>
-    <td>09/17/2022</td>
-    <td>All</td>
-    <td>Kale</td>
-    <td>9999999</td>
-    <td>Tons</td>
-  </tr>
-  <tr>
-    <td>09/18/2020</td>
-    <td>SQ7</td>
-    <td>Peas</td>
-    <td>1</td>
-    <td>Pea</td>
-  </tr>
-  <tr>
-    <td>09/19/2021</td>
-    <td>SQ7</td>
-    <td>Broccoli</td>
-    <td>10</td>
-    <td>Trees</td>
+  <tr v-for="d in harvest_logs">
+    <td>{{ d.date }}</td>
+    <td>{{ d.area }}</td>
+    <td>{{ d.crop }}</td>
+    <td>{{ d.yield }}</td>
+    <td>{{ d.units }}</td>
   </tr>
 </table>
 </div>
@@ -108,7 +94,11 @@
     data:{
       header: "My Sample Harvest Report",
       crops: ["Broccoli", "Kale", "Peas"],
-      areas: ["All", "Chuau-1", "SQ7"]
+      areas: ["All", "Chuau-1", "SQ7"],
+      harvest_logs: 
+      [{date:"09/17/2022",area:"All",crop:"Kale",yield:"9999999",units:"Tons"},
+      {date:"09/18/2020",area:"SQ7",crop:"Peas",yield:"1",units:"Pea"},
+      {date:"09/19/2021",area:"SQ7",crop:"Broccoli",yield:"10",units:"Trees"}]
     }
   });
 </script>
