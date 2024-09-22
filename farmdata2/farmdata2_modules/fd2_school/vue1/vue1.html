@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vue Data Binding Spike</title>
+    <style>
+      [v-cloak] {
+        display:none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="shopping-list" v-cloak>
+      <h1>{{ header }}</h1>
+      <input type="text" v-model="header">
+    </div>
+    <script src="https://unpkg.com/vue@2"></script>
+    <script>
+      var shoppingList = new Vue({
+        el: '#shopping-list',
+        data:{
+          header: 'Generic Header'
+        }
+      });
+    </script>
+  </body>
+</html>
