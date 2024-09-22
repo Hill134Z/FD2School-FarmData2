@@ -29,16 +29,12 @@
 
 <label for = "crop">Crop:</label>
 <select id="crop" name="crop">
-    <option>Broccoli</option>
-    <option selected>Kale</option>
-    <option>Peas</option>
+  <option v-for="crops in crops">{{ crops }}</option>
 </select>
 
 <label for = "field">Area:</label>
 <select id="field" name="field">
-    <option selected>All</option>
-    <option>Chuau-1</option>
-    <option>SQ7</option>
+    <option v-for="areas in areas">{{ areas }}</option>
 </select>
 
 <br>
@@ -110,7 +106,9 @@
   var rptTitle = new Vue({
     el: "#rpt-title",
     data:{
-      header: "My Sample Harvest Report"
+      header: "My Sample Harvest Report",
+      crops: ["Broccoli", "Kale", "Peas"],
+      areas: ["All", "Chuau-1", "SQ7"]
     }
   });
 </script>
