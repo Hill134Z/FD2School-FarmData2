@@ -44,7 +44,7 @@
 
 <label for = "crop">Crop:</label>
 <select id="crop" name="crop">
-  <option v-for="crops in crops">{{ crops }}</option>
+  <option v-for="crop in cropNames">{{ crop[1] }}</option>
 </select>
 
 <label for = "field">Area:</label>
@@ -107,21 +107,39 @@
       end_date: "2018-05-15",
       newReport: {date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches"},
       harvest_logs: 
-      []
+      [],
+      idToCropMap: new Map(),
+    },
+    computed:{
+      cropNames(){
+        //return this.item.slice(0).reverse();
+        return Array.from(this.idToCropMap);
+      }
     },
     methods:{saveReport: function(){
       axios.get('/farm.json')  // this line sends the request.
         .then((response) => {
 	        this.farm_name = response.data.name
-          this.user_name = response.data.user.name;
-          this.language = response.data.languages.en.name;
+          this.user_name = response.data.user.name
+          this.language = response.data.languages.en.name
 	      })
 	      .catch((error) => {
           console.log("Error Occurred")
           console.log(error)
         })
         this.harvest_logs.push(this.newReport);
-    }}
+    }},
+    created() {
+      getIDToCropMap()
+      .then((theMap) => {
+        this.idToCropMap = theMap
+      })
+      .catch((err) => {
+        console.log("Error Occurred")
+        console.log(error)
+      })
+	    console.log("HarvestReport Vue instance created!")
+    }
   });
   Vue.config.devtools = true;
 </script>
