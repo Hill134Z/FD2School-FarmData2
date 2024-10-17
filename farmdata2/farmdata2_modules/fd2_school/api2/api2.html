@@ -103,11 +103,11 @@
       header: "My Sample Harvest Report",
       crops: ["Broccoli", "Kale", "Peas"],
       areas: ["All", "Chuau-1", "SQ7"],
-      start_date: "2018-01-05",
-      end_date: "2018-05-15",
+      start_date: "2020-05-05",
+      end_date: "2020-05-15",
       newReport: {date:"2018-05-01", area:"Orion-3", crop:"Kale", yield:"12", units:"Bunches"},
-      harvest_logs: 
-      [],
+      harvest_logs: [],
+      fetched_logs: [],
       idToCropMap: new Map(),
     },
     computed:{
@@ -116,7 +116,8 @@
         return Array.from(this.idToCropMap);
       }
     },
-    methods:{saveReport: function(){
+    methods:{
+      saveReport: function(){
       axios.get('/farm.json')  // this line sends the request.
         .then((response) => {
 	        this.farm_name = response.data.name
@@ -127,15 +128,27 @@
           console.log("Error Occurred")
           console.log(error)
         })
-        this.harvest_logs.push(this.newReport);
-    }},
+        this.harvest_logs.push(this.newReport)
+        let start_date_unix = dayjs(this.start_date).unix()
+        let end_date_unix = dayjs(this.end_date).unix()
+        let request = "/log.json?type=farm_harvest&timestamp[ge]=" + start_date_unix + "&timestamp[le]=" + end_date_unix
+        
+        getAllPages(request, this.fetched_logs)
+          .catch((error) => {
+            console.log("Error Occurred")
+            console.log("/log.json?type=farm_harvest&timestamp[ge]"+this.start_date_unix+"&timestamp[le]="+this.end_date_unix)
+            console.log(error)
+          })      
+    }
+
+  },
     created() {
       getIDToCropMap()
       .then((theMap) => {
         this.idToCropMap = theMap
       })
       .catch((err) => {
-        console.log("Error Occurred")
+        console.log("An Error Occurred")
         console.log(error)
       })
 	    console.log("HarvestReport Vue instance created!")
