@@ -13,7 +13,7 @@
   }
 </style>
 
-<h1 data-cy="page-header">Harvest Report</h1>
+<h1 data-cy="page-header" >Harvest Report</h1>
 <p>This page is a <i>mockup</i> of a simplified harvest report</p>
 <div id="rpt-title" v-cloak>
 <label for="comment">Title:</label>
@@ -55,10 +55,9 @@
 </select>
 
 <br>
-<button type="button" v-model="newReport" @click="saveReport"> Generate Report</button>
+<button type="button" v-model="newReport" data-cy="generate-report-btn" @click="saveReport"> Generate Report</button>
 <hr>
 
-<h2>{{ header? header:"Mock Harvest Report"}}</h2>
 <br>
 <p>Details:</p>
 <ul>
@@ -74,6 +73,7 @@
 
 <p v-if="harvestReportRows==''">No Matching Records</p>
 <div v-else="returnAllPages">
+<h2 data-cy="title-text" >{{ header? header:"Mock Harvest Report"}}</h2>
 <table border=1>
   <tr>
     <th>Row</th>
