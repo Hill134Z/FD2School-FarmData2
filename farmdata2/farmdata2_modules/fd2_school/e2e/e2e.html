@@ -23,6 +23,7 @@
     <label>
        Start:
       <input v-model="start_date"
+        data-cy="start-date"
         type="date"
         name="party"
         min="2014-01-01"
@@ -33,6 +34,7 @@
     <label>
         End:
         <input v-model="end_date"
+          data-cy="end-date"
           type="date"
           name="party"
           :min="start_date"
