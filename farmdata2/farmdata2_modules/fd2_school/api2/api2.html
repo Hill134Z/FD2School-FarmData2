@@ -43,13 +43,13 @@
 </form>
 
 <label for = "crop">Crop:</label>
-<select id="crop" name="crop">
-  <option v-for="crop in cropNames">{{ crop[1] }}</option>
+<select id="crop" name="crop" v-model="crop">
+  <option v-for="crop in cropNames">{{ crop }}</option>
 </select>
 
 <label for = "field">Area:</label>
 <select id="field" name="field">
-    <option v-for="areas in areas">{{ areas }}</option>
+  <option v-for="areas in areas">{{ areas }}</option>
 </select>
 
 <br>
@@ -101,6 +101,7 @@
       user_name: "",
       language: "",
       header: "My Sample Harvest Report",
+      crop: "KALE",
       crops: [],
       areas: ["All", "Chuau-1", "SQ7"],
       start_date: "2020-05-05",
@@ -113,21 +114,23 @@
     computed:{
       cropNames: function(){
         //return this.item.slice(0).reverse();
-        return Array.from(this.idToCropMap);
+        return Array.from(this.idToCropMap.values());
       },
       harvestReportRows() {
 	      let tableRows = []
 	      for(let log of this.fetched_logs) {
           let cropNames = this.idToCropMap.get(log.data.crop_tid)
-		      let tableRow = {
-			      date: dayjs(log.timestamp),
-            crop: cropNames,
-            area: log.area[0].name,
-            yield: log.quantity[0].value,
-            units: log.quantity[0].unit.name
-		      }
-		      tableRows.push(tableRow)
-	      }
+          if (cropNames == this.crop){
+		        let tableRow = {
+			        date: dayjs(log.timestamp),
+              crop: cropNames,
+              area: log.area[0].name,
+              yield: log.quantity[0].value,
+              units: log.quantity[0].unit.name
+		        }
+		        tableRows.push(tableRow)
+	        }
+        }
 	      return tableRows
       }
     },
@@ -138,6 +141,7 @@
 	        this.farm_name = response.data.name
           this.user_name = response.data.user.name
           this.language = response.data.languages.en.name
+          
 	      })
 	      .catch((error) => {
           console.log("Error Occurred")
