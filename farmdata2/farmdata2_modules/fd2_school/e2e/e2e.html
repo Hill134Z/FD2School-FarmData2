@@ -13,7 +13,7 @@
   }
 </style>
 
-<h1 data-cy="page-header" >Harvest Report</h1>
+<h1 data-cy="page-header">Harvest Report</h1>
 <p>This page is a <i>mockup</i> of a simplified harvest report</p>
 <div id="rpt-title" v-cloak>
 <label for="comment">Title:</label>
@@ -61,9 +61,9 @@
 <br>
 <p>Details:</p>
 <ul>
-    <li><b>Farm:</b>{{ farm_name }}</li>
-    <li><b>User:</b>{{ user_name }}</li>
-    <li><b>Language:</b>{{ language }}</li>
+    <li data-cy="farm-name"><b>Farm:</b>{{ farm_name }}</li>
+    <li data-cy="user-name"><b>User:</b>{{ user_name }}</li>
+    <li><b>Language:</b><span data-cy="language">{{ language }}</span></li>
 </ul>
 <ul>
     <li><b>Start:</b>05/01/2018</li>
